@@ -96,11 +96,18 @@ ASTNode Term() :
 
 
 ASTNode Fact() :
-{ Token n; 
-  ASTNode t;}
+{ 
+  Token n; 
+  ASTNode t;
+  int num = 0;
+ }
 {
-   ( n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); } | <LPAR> t=Exp() <RPAR> )
-   { return t; }
+   ( 
+   		n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; } 
+   	| <LPAR> t=Exp() <RPAR> { return t; }
+   	| (<MINUS> {num = num + 1;})+ t = Fact() {return new ASTNeg(t, num);}
+   )
+   
 }
 
 
