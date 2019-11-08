@@ -1,4 +1,4 @@
-package environment;
+package astNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.xml.crypto.NodeSetData;
 
-import astNode.ASTNode;
 import iValue.IValue;
 
 /**
