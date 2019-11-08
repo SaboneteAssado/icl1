@@ -11,11 +11,13 @@ public class Parser {
   public static void main(String args[]) {
     Parser parser = new Parser(System.in);
     ASTNode exp;
+    Environment<IValue> env = new Environment<IValue>(null);
 
     while (true) {
     try {
     exp = parser.Start();
-    System.out.println( exp.eval() );
+    exp.eval(env).show();
+    System.out.println();
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
       parser.ReInit(System.in);
