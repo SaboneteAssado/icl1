@@ -1,5 +1,8 @@
 PARSER_BEGIN(Parser)
 
+import arithmetic.*;
+import astNode.*;
+import iValue.*;
 
 /** ID lister. */
 public class Parser {
