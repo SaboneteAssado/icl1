@@ -73,9 +73,20 @@ ASTNode Exp() :
 }
 
 ASTNode Term() :
-{}
 {
-     Fact() ( ( <TIMES> | <DIV> ) Term() )?
+  Token op;
+  ASTNode t1, t2;
+}
+{
+     t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2=Term() 
+                    {
+                      if(op.kind == TIMES )
+                        t1 = new ASTMul(t1,t2);
+                      else 
+                        t1 = new ASTDiv(t1,t2);
+                    }
+     )?
+     { return t1; }
 }
 
 
