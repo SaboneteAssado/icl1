@@ -53,10 +53,10 @@ public class Environment<E> {
 	 */
 	public void assoc(String id, E val) throws Exception {
 		E envVal = findId(id);
-		if ( envVal != null )
-			throw new Exception("ID Already Assigned");
-		else {
+		if ( envVal == null || ( envVal instanceof IValue && val instanceof IValue) )
 			nodeVals.put(id, val);
+		else {
+			throw new Exception("ID Already Assigned");
 		}
 	}
 
