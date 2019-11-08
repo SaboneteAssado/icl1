@@ -1,7 +1,14 @@
 package environment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.xml.crypto.NodeSetData;
+
+import astNode.ASTNode;
+import iValue.IValue;
 
 /**
  * Environment class.
@@ -16,12 +23,11 @@ public class Environment<E> {
 	 */
 	private Environment<E> prev;
 
-	private 
+	private Map<String, E> nodeVals;
 
 	public Environment(Environment<E> prev) {
 		this.prev = prev;
-		ids = new ArrayList<ASTId>();
-		values = new ArrayList<E>();
+		nodeVals = new HashMap<String, E>();
 	}
 
 	/**
@@ -42,60 +48,30 @@ public class Environment<E> {
 
 	/**
 	 * Associates a identifier with a value.
-	 * @param id identifier.
-	 * @param value
-	 * @throws IdDeclaredException is thrown if the identifier is already declared.
+	 * @param id
+	 * @param val
+	 * @throws Exception 
 	 */
-	public void assoc(String id, E value) throws IdDeclaredException {
-		E resultInEnv = searchInEnv(id);
-		E result = null;
-		if (resultInEnv != null) {
-			if(resultInEnv instanceof IValueRef && value instanceof IValue) {
-				((IValueRef)resultInEnv).setValue((IValue)value);
-			}
-		} else {
-			try {
-				result = find(id);
-			} catch (DontFindException e) {
-				ids.add(new ASTId(id));
-				values.add(value);
-			}
-			if (result != null && resultInEnv == null) {
-				ids.add(new ASTId(id));
-				values.add(value);
-			} else if (result != null && resultInEnv != null) {
-				throw new IdDeclaredException("Id is Already Declared");
-			}
+	public void assoc(String id, E val) throws Exception {
+		E envVal = findId(id);
+		if ( envVal != null )
+			throw new Exception("ID Already Assigned");
+		else {
+			nodeVals.put(id, val);
 		}
-	}
-
-	/**
-	 * Searches for an id in the current environment and its parent environments.
-	 * @param name of identifier.
-	 * @return the value associated with the name.
-	 * @throws DontFindException is thrown if no value for the identifier is found.
-	 */
-	public E find(String name) throws DontFindException {
-		E result = searchInEnv(name);
-		if (result != null)
-			return result;
-		else if (prev != null)
-			return prev.find(name);
-		throw new DontFindException("Can't Find the Element");
 	}
 
 	/**
 	 * Searches for an identifier in an environment.
-	 * @param name of identifier.
-	 * @return the value.
+	 * @param id.
+	 * @return val.
 	 */
-	private E searchInEnv(String name) {
-		E val = null;
-		for (int i = 0; i < this.ids.size(); i++) {
-			if(this.ids.get(i).getId().equals(name)) {
-				val = values.get(i);
-			}
-		}
-		return val;
+	private E findId(String id){
+		E val = nodeVals.get(id);
+		if ( val != null)
+			return val;
+		else if ( prev != null )
+			return prev.findId(id);
+		else return val;
 	}
 }
