@@ -105,7 +105,7 @@ ASTNode Fact() :
    ( 
    		n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; } 
    	| <LPAR> t=Exp() <RPAR> { return t; }
-   	| (<MINUS> {num = num + 1;})+ t = Fact() {return new ASTNeg(t, num);}
+   	| <MINUS> t = Fact() {return new ASTNeg(t, 1);}
    )
    
 }
