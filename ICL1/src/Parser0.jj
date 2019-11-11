@@ -55,6 +55,10 @@ TOKEN :
   < RPAR : ")" >
   |
   < EL: "\n" >
+  |
+  < LET: "let" >
+  |
+  < IN: "in" >
 }
 
 ASTNode Start():
@@ -100,12 +104,14 @@ ASTNode Fact() :
   Token n; 
   ASTNode t;
   int num = 0;
+  char id;
  }
 {
    ( 
    		n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; } 
    	| <LPAR> t=Exp() <RPAR> { return t; }
    	| <MINUS> t = Fact() {return new ASTNeg(t, 1);}
+   	| <LET> id=<Id>
    )
    
 }
