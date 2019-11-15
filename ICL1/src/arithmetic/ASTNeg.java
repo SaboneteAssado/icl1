@@ -24,6 +24,10 @@ public class ASTNeg implements ASTNode {
 	@Override
 	public IValue eval(Environment<IValue> env) {
 		IValue v = num.eval(env);
+<<<<<<< HEAD
 		return new VInt( -((VInt) v).getVal() );
+=======
+		return new VInt( -((VInt)v).getVal() );
+>>>>>>> branch 'master' of https://github.com/SaboneteAssado/icl1
 	}
 }
