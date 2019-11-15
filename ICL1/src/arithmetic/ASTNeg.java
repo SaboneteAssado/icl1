@@ -13,10 +13,8 @@ import iValue.VInt;
 public class ASTNeg implements ASTNode {
 
 	private ASTNode num;
-	private int nMinus;
 
-	public ASTNeg(ASTNode num, int nMinus) {
-		this.nMinus = nMinus;
+	public ASTNeg(ASTNode num) {
 		this.num = num;
 	}
 
@@ -26,11 +24,6 @@ public class ASTNeg implements ASTNode {
 	@Override
 	public IValue eval(Environment<IValue> env) {
 		IValue v = num.eval(env);
-		IValue result = null;
-		if (nMinus%2 == 0)
-			result = new VInt(((VInt)v).getVal());
-		else
-			result = new VInt(-((VInt)v).getVal());
-		return result;
+		return new VInt( -((VInt) v).getVal() );
 	}
 }
