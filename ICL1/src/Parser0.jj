@@ -3,6 +3,8 @@ PARSER_BEGIN(Parser)
 import arithmetic.*;
 import astNode.*;
 import iValue.*;
+import java.util.Map;
+import java.util.HashMap;
 
 /** ID lister. */
 public class Parser {
@@ -59,6 +61,13 @@ TOKEN :
   < LET: "let" >
   |
   < IN: "in" >
+  |
+  < END: "end" >
+  |
+  < SEQ: ";" >
+  |
+  < EQUALS: "=" >
+  
 }
 
 ASTNode Start():
@@ -102,16 +111,18 @@ ASTNode Term() :
 ASTNode Fact() :
 { 
   Token n; 
-  ASTNode t;
+  ASTNode t, t1, t2;
   int num = 0;
   char id;
+  Map<ASTNode, ASTNode> nodeVals = new HashMap<ASTNode, ASTNode>();
  }
 {
    ( 
    		n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; } 
    	| <LPAR> t=Exp() <RPAR> { return t; }
    	| <MINUS> t = Fact() {return new ASTNeg(t);}
-   	| <LET> id=<Id> 
+   	| <LET> n = <Id> <EQUALS> t1 = Exp() <IN> t2 = Exp() <END> {nodeVals.put(t,t1); return new ASTLet(nodeVals,t2);}
+   	| n = <Id> {return new ASTId(n.image);}
    )
    
 }

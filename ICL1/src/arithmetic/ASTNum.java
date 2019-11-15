@@ -1,14 +1,16 @@
 package arithmetic;
 import astNode.ASTNode;
-import astNode.Environment;
+import compiler.Code;
+import compiler.Environment;
 import iValue.IValue;
 import iValue.VInt;
 
 public class ASTNum implements ASTNode{
-	private int num;
+	
+	private VInt num;
 
 	public ASTNum(int num) {
-		this.num = num;
+		this.num = new VInt(num);
 	}
 
 	/**
@@ -16,7 +18,10 @@ public class ASTNum implements ASTNode{
 	 */
 	@Override
 	public IValue eval(Environment<IValue> env) {
-		IValue result = new VInt(num);
-		return result;
+		return num;
+	}
+	
+	public void compile (Code code) {
+		code.emit("sipush " + num.getVal() );
 	}
 }

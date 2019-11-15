@@ -1,5 +1,7 @@
 package astNode;
 
+import compiler.Code;
+import compiler.Environment;
 import iValue.IValue;
 
 /**
@@ -15,4 +17,6 @@ public interface ASTNode {
 	 * @return the value of the expression.
 	 */
 	IValue eval(Environment<IValue> env);
+	
+	void compile(Code code);
 }

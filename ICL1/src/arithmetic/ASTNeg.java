@@ -1,7 +1,8 @@
 package arithmetic;
 
 import astNode.ASTNode;
-import astNode.Environment;
+import compiler.Code;
+import compiler.Environment;
 import iValue.IValue;
 import iValue.VInt;
 
@@ -25,5 +26,10 @@ public class ASTNeg implements ASTNode {
 	public IValue eval(Environment<IValue> env) {
 		IValue v = num.eval(env);
 		return new VInt(-((VInt)v).getVal());
+	}
+	
+	public void compile (Code code) {
+		num.compile(code);
+		code.emit("ineg");
 	}
 }

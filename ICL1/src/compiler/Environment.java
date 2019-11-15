@@ -1,16 +1,12 @@
-package astNode;
+package compiler;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.xml.crypto.NodeSetData;
-
-import iValue.IValue;
+import astNode.ASTId;
 
 /**
- * Environment class.
+ * Environment class
  * @author Miguel Araujo 45699 
  *
  */
@@ -51,10 +47,12 @@ public class Environment<E> {
 	 * @param val
 	 * @throws Exception 
 	 */
-	public void assoc(String id, E val) throws Exception {
-		E envVal = findId(id);
-		if ( envVal == null || ( envVal instanceof IValue && val instanceof IValue) )
-			nodeVals.put(id, val);
+	public void assoc(ASTId id, E val) throws Exception {
+		String identifier = id.getId();
+		E envVal = findId(identifier);
+//		|| ( envVal instanceof IValue && val instanceof IValue)
+		if ( envVal == null  )
+			nodeVals.put(identifier, val);
 		else {
 			throw new Exception("ID Already Assigned");
 		}
@@ -65,7 +63,7 @@ public class Environment<E> {
 	 * @param id.
 	 * @return val.
 	 */
-	private E findId(String id){
+	public E findId(String id){
 		E val = nodeVals.get(id);
 		if ( val != null)
 			return val;

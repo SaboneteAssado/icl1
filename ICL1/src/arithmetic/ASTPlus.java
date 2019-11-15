@@ -1,7 +1,8 @@
 package arithmetic;
 
 import astNode.ASTNode;
-import astNode.Environment;
+import compiler.Code;
+import compiler.Environment;
 import iValue.IValue;
 import iValue.VInt;
 
@@ -27,5 +28,11 @@ public class ASTPlus implements ASTNode {
 		IValue v1 = expr1.eval(env);
 		IValue v2 = expr2.eval(env);
 		return new VInt(((VInt)v1).getVal() + ((VInt)v2).getVal());
+	}
+	
+	public void compile (Code code) {
+		expr1.compile(code);
+		expr2.compile(code);
+		code.emit("iadd");
 	}
 }
