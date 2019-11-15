@@ -40,8 +40,6 @@ SKIP :
 
 TOKEN :
 {
-  < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
-  |
   < Num: (["0"-"9"]) + >
   |
   < PLUS : "+" >
@@ -67,6 +65,8 @@ TOKEN :
   < SEQ: ";" >
   |
   < EQUALS: "=" >
+  |
+  < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
   
 }
 
@@ -121,7 +121,7 @@ ASTNode Fact() :
    		n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); return t; } 
    	| <LPAR> t=Exp() <RPAR> { return t; }
    	| <MINUS> t = Fact() {return new ASTNeg(t);}
-   	| <LET> n = <Id> <EQUALS> t1 = Exp() <IN> t2 = Exp() <END> {nodeVals.put(t,t1); return new ASTLet(nodeVals,t2);}
+   	| <LET> (t = Exp() <EQUALS> t1 = Exp())+ {nodeVals.put(t,t1);} (<IN> t2 = Exp() <END>)+ {return new ASTLet(nodeVals,t2);}
    	| n = <Id> {return new ASTId(n.image);}
    )
    

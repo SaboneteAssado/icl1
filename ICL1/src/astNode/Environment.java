@@ -1,9 +1,7 @@
-package compiler;
+package astNode;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import astNode.ASTId;
 
 /**
  * Environment class

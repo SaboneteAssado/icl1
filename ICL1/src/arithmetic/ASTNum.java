@@ -1,7 +1,7 @@
 package arithmetic;
 import astNode.ASTNode;
+import astNode.Environment;
 import compiler.Code;
-import compiler.Environment;
 import iValue.IValue;
 import iValue.VInt;
 

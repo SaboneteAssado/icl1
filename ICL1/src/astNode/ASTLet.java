@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import compiler.Code;
-import compiler.Environment;
 import iValue.IValue;
 
 /**
