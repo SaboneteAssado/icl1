@@ -69,4 +69,21 @@ public class Environment<E> {
 			return prev.findId(id);
 		else return val;
 	}
+
+	/**
+	 * Checks whether the identifier exists in the current scope only.
+	 * @param id identifier
+	 * @return true when identifier exists in this scope
+	 */
+	public boolean containsInCurrentScope(String id) {
+		return nodeVals.containsKey(id);
+	}
+
+	/**
+	 * Returns the amount of bindings in the current scope.
+	 * @return number of bindings
+	 */
+	public int currentScopeSize() {
+		return nodeVals.size();
+	}
 }

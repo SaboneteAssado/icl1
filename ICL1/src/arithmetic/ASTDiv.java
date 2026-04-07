@@ -25,10 +25,12 @@ public class ASTDiv implements ASTNode {
 	 */
 	@Override
 	public IValue eval(Environment<IValue> env) {
-		IValue v1;
-		v1 = expr1.eval(env);
-		IValue v2 = expr2.eval(env);
-		return new VInt(((VInt)v1).getVal() / ((VInt)v2).getVal());
+		VInt v1 = (VInt) expr1.eval(env);
+		VInt v2 = (VInt) expr2.eval(env);
+		if (v2.isZero()) {
+			throw new ArithmeticException("Division by zero");
+		}
+		return new VInt(v1.getVal() / v2.getVal());
 
 	}
 	

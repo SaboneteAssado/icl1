@@ -25,9 +25,9 @@ public class ASTPlus implements ASTNode {
 	 */
 	@Override
 	public IValue eval(Environment<IValue> env) {
-		IValue v1 = expr1.eval(env);
-		IValue v2 = expr2.eval(env);
-		return new VInt(((VInt)v1).getVal() + ((VInt)v2).getVal());
+		VInt v1 = (VInt) expr1.eval(env);
+		VInt v2 = (VInt) expr2.eval(env);
+		return v1.add(v2);
 	}
 	
 	public void compile (Code code) {
